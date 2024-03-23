@@ -1,0 +1,43 @@
+<?php
+// Connect to MySQL
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "license";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Process form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $license_number = $_POST['license_number'];
+    $nic_number = $_POST['nic_number'];
+    $birthday = $_POST['birthday'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $mobile_number = $_POST['mobile_number'];
+
+
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["profile_image"]["name"]);
+    move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_file);
+
+
+    // Insert data into the database
+    $sql = "INSERT INTO user (first_name, last_name, license_number, nic_number, birthday,picture_image, username, password, mobile_number) VALUES ('$first_name', '$last_name', '$license_number', '$nic_number', '$birthday','$target_file','$username', '$password', '$mobile_number')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
+?>
