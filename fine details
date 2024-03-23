@@ -1,0 +1,94 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "license";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$sql = "SELECT * FROM traffic_offences WHERE 
+            license_number LIKE '%$search%' OR 
+            name LIKE '%$search%' OR  
+            court_name LIKE '%$search%' OR 
+            officer_01_id LIKE '%$search%' OR 
+            officer_02_id LIKE '%$search%'";
+
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Offences</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Traffic Offences</h2>
+        <form class="form-inline mb-3">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fine ID</th>
+                    <th>License Number</th>
+                    <th>Name</th>
+                    <th>Offence</th>
+                    <th>Issue Date & Time</th>
+                    <th>Closed Date</th>
+                    <th>Fine</th>
+                    <th>Court Date</th>
+                    <th>Court Name</th>
+                    <th>Officer 01 Name</th>
+                    <th>Officer 01 ID</th>
+                    <th>Officer 02 Name</th>
+                    <th>Officer 02 ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $closedDate = strtotime($row['closed_date']);
+                        $status = ($closedDate < time()) ? "Blocked" : "Active";
+                        $statusColor = ($closedDate < time()) ? "text-danger" : "";
+
+                        echo "<tr>";
+                        echo "<td>" . $row["fine_id"] . "</td>";
+                        echo "<td>" . $row["license_number"] . "</td>";
+                        echo "<td>" . $row["name"] . "</td>";
+                        echo "<td>" . $row["offence"] . "</td>";
+                        echo "<td>" . $row["issue_datetime"] . "</td>";
+                        echo "<td class='$statusColor'>{$row['closed_date']} ($status)</td>";
+                        echo "<td>" . $row["fine"] . "</td>";
+                        echo "<td>" . $row["court_date"] . "</td>";
+                        echo "<td>" . $row["court_name"] . "</td>";
+                        echo "<td>" . $row["officer_01_name"] . "</td>";
+                        echo "<td>" . $row["officer_01_id"] . "</td>";
+                        echo "<td>" . $row["officer_02_name"] . "</td>";
+                        echo "<td>" . $row["officer_02_id"] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='13'>No data found</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
