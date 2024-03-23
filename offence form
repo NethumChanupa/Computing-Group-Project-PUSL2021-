@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Offense Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5 mb-4">Traffic Offense Form</h2>
+        <form method="post" action="submit_offense.php">
+            <div class="form-group">
+                <label for="fine_id">Fine ID</label>
+                <input type="text" class="form-control" id="fine_id" name="fine_id" required>
+            </div>
+            <div class="form-group">
+                <label for="license_number">License Number</label>
+                <input type="text" class="form-control" id="license_number" name="license_number" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="offence">Offense</label>
+                <input type="text" class="form-control" id="offence" name="offence" required>
+            </div>
+            <div class="form-group">
+                <label for="issue_datetime">Issue Date and Time</label>
+                <input type="datetime-local" class="form-control" id="issue_datetime" name="issue_datetime" required>
+            </div>
+            <div class="form-group">
+                <label for="closed_date">Closed Date</label>
+                <input type="date" class="form-control" id="closed_date" name="closed_date">
+            </div>
+            <div class="form-group">
+                <label for="fine">Fine Amount</label>
+                <input type="number" class="form-control" id="fine" name="fine" required>
+            </div>
+            <div class="form-group">
+                <label for="court_date">Court Date</label>
+                <input type="date" class="form-control" id="court_date" name="court_date">
+            </div>
+            <div class="form-group">
+                <label for="court_name">Court Name</label>
+                <input type="text" class="form-control" id="court_name" name="court_name">
+            </div>
+            <div class="form-group">
+                <label for="officer_o1_name">Officer 01 Name</label>
+                <input type="text" class="form-control" id="officer_01_name" name="officer_01_name" required>
+            </div>
+            <div class="form-group">
+                <label for="officer_01_id">Officer 01 ID</label>
+                <input type="text" class="form-control" id="officer_01_id" name="officer_01_id" required>
+            </div>
+            <div class="form-group">
+                <label for="officer_02_name">Officer 02 Name</label>
+                <input type="text" class="form-control" id="officer_02_name" name="officer_02_name">
+            </div>
+            <div class="form-group">
+                <label for="officer_02_id">Officer 02 ID</label>
+                <input type="text" class="form-control" id="officer_02_id" name="officer_02_id">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
