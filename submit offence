@@ -1,0 +1,42 @@
+<?php
+// Establish database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "license";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Prepare and bind parameters
+
+// Set parameters and execute
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $fine_id = $_POST['fine_id'];
+    $license_number = $_POST['license_number'];
+    $name = $_POST['name'];
+    $offence = $_POST['offence'];
+    $issue_datetime = $_POST['issue_datetime'];
+    $closed_date = $_POST['closed_date'];
+    $fine = $_POST['fine'];
+    $court_date = $_POST['court_date'];
+    $court_name = $_POST['court_name'];
+    $officer_01_name = $_POST['officer_01_name'];
+    $officer_01_id = $_POST['officer_01_id'];
+    $officer_02_name = $_POST['officer_02_name'];
+    $officer_02_id = $_POST['officer_02_id'];
+
+$sql = "INSERT INTO traffic_offences (fine_id, license_number, name, offence, issue_datetime, closed_date, fine, court_date, court_name, officer_01_name, officer_01_id, officer_02_name, officer_02_id) VALUES ($fine_id, $license_number, $name, $offence, $issue_datetime, $closed_date, $fine, $court_date, $court_name, $officer_01_name, $officer_01_id, $officer_02_name, $officer_02_id)";
+
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+}
+$conn->close();
+?>
