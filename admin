@@ -1,0 +1,28 @@
+<?php
+session_start();
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if username and password are correct
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Your authentication logic goes here 
+    // For demonstration purposes, let's assume the username is "admin" and password is "password"
+    if ($username === 'admin' && $password === 'password') {
+        // Authentication successful
+        $_SESSION['username'] = $username;
+        header("Location: welcome.php");
+        exit;
+    } else {
+        // Authentication failed
+        echo "<script>alert('Invalid username or password. Please try again.');</script>";
+        echo "<script>window.location = 'index.php';</script>";
+        exit;
+    }
+} else {
+    // Redirect back to login page if accessed directly
+    header("Location: index.php");
+    exit;
+}
+?>
